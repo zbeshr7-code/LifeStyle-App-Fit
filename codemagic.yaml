@@ -32,14 +32,10 @@ workflows:
             cp .env.example .env
           fi
           flutter pub get
-          mkdir -p ios/Runner.xcworkspace/xcshareddata/xcschemes
-          if [ -f ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme ]; then
-            cp ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme \
-               ios/Runner.xcworkspace/xcshareddata/xcschemes/Runner.xcscheme
-          fi
-          echo "Shared schemes:"
-          ls -la ios/Runner.xcodeproj/xcshareddata/xcschemes/
+          echo "Shared schemes (workspace):"
           ls -la ios/Runner.xcworkspace/xcshareddata/xcschemes/
+          echo "Shared schemes (project):"
+          ls -la ios/Runner.xcodeproj/xcshareddata/xcschemes/
           xcodebuild -list -workspace ios/Runner.xcworkspace
       - name: Install CocoaPods dependencies
         script: cd ios && pod install
