@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "621742273115",
+    "project_id": "lifestyle-fit",
+    "storage_bucket": "lifestyle-fit.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:621742273115:android:af44ff2d9449488454057e",
+        "android_client_info": {
+          "package_name": "com.sa.soccer_sys"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfcb0ejabR2q_-PkPUDobBiOEM4mptD3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

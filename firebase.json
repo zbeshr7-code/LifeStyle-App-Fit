@@ -1,0 +1,39 @@
+{
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "lifestyle-fit",
+          "appId": "1:621742273115:android:af44ff2d9449488454057e",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "lifestyle-fit",
+          "configurations": {
+            "android": "1:621742273115:android:af44ff2d9449488454057e",
+            "ios": "1:621742273115:ios:a53ecdf7ca9264f354057e",
+            "macos": "1:621742273115:ios:a53ecdf7ca9264f354057e",
+            "web": "1:621742273115:web:915f540140c41fc654057e",
+            "windows": "1:621742273115:web:f14a73c54078ef5b54057e"
+          }
+        }
+      }
+    }
+  }
+}

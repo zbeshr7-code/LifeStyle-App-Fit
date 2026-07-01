@@ -1,0 +1,31 @@
+abstract final class AppRoutes {
+  static const splash = '/splash';
+  static const login = '/login';
+  static const register = '/register';
+  static const forgotPassword = '/forgot-password';
+  static const home = '/home';
+  static const chatRoom = '/chat/room';
+  static const callActive = '/call/active';
+  static const activityHistory = '/activity/history';
+  static const activityDay = '/activity/day';
+  static const profileEdit = '/profile/edit';
+  static const progressGallery = '/progress/gallery';
+  static const progressAddEntry = '/progress/add';
+  static const progressEntryDetail = '/progress/entry';
+  static const chooseTrainer = '/coaching/choose-trainer';
+  static const traineeDetail = '/coaching/trainee-detail';
+  static const traineeActivityHistory = '/coaching/trainee-activity-history';
+  static const nutritionMeals = '/nutrition/meals';
+  static const nutritionMealForm = '/nutrition/meal-form';
+  static const workoutWeekly = '/workouts/weekly';
+  static const workoutDay = '/workouts/day';
+  static const workoutExerciseForm = '/workouts/exercise-form';
+  static const subscriptionPlans = '/subscriptions/plans';
+  static const subscriptionCheckout = '/subscriptions/checkout';
+  static const subscriptionSuccess = '/subscriptions/success';
+  static const trainerSubscriptionPlans = '/subscriptions/trainer/plans';
+  static const trainerPlanForm = '/subscriptions/trainer/plan-form';
+  static const trainerSubscribers = '/subscriptions/trainer/subscribers';
+  static const trainerSubscriptionEdit = '/subscriptions/trainer/edit';
+  static const trainerAssignSubscription = '/subscriptions/trainer/assign';
+}
