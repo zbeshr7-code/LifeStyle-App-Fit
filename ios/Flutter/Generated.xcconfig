@@ -1,0 +1,14 @@
+// Checked in for CI (Codemagic scheme detection). Overwritten by `flutter pub get` on build agents.
+FLUTTER_ROOT=/Users/builder/programs/flutter
+FLUTTER_APPLICATION_PATH=/Users/builder/clone
+FLUTTER_TARGET=lib/main.dart
+FLUTTER_BUILD_DIR=build
+FLUTTER_BUILD_NAME=1.6.6
+FLUTTER_BUILD_NUMBER=7
+PACKAGE_CONFIG=.dart_tool/package_config.json
+COCOAPODS_PARALLEL_CODE_SIGN=true
+EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386
+EXCLUDED_ARCHS[sdk=iphoneos*]=armv7
+DART_OBFUSCATION=false
+TRACK_WIDGET_CREATION=false
+TREE_SHAKE_ICONS=true

@@ -49,10 +49,13 @@ app.*.map.json
 /ios/.symlinks/
 /ios/Flutter/Flutter.framework
 /ios/Flutter/App.framework
-/ios/Flutter/Generated.xcconfig
-/ios/Flutter/ephemeral/
 /ios/Flutter/flutter_export_environment.sh
 /ios/Runner/GeneratedPluginRegistrant.*
+/ios/Flutter/ephemeral/*
+!/ios/Flutter/ephemeral/Packages/
+!/ios/Flutter/ephemeral/Packages/**
+!/ios/Flutter/ephemeral/flutter_lldbinit
+!/ios/Flutter/ephemeral/flutter_lldb_helper.py
 
 # macOS
 /macos/Flutter/ephemeral/
