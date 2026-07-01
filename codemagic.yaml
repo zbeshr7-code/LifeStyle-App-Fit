@@ -33,14 +33,9 @@ workflows:
       - name: Install CocoaPods dependencies
         script: cd ios && pod install
       - name: Set up code signing settings on Xcode project
-        script: xcode-project use-profiles --project ios/Runner.xcodeproj
+        script: xcode-project use-profiles
       - name: Flutter build ipa
-        script: |
-          flutter build ipa --release \
-            --scheme Runner \
-            --export-options-plist=ios/ExportOptions.plist \
-            --build-name=$(grep "version: " pubspec.yaml | cut -d " " -f 2 | cut -d "+" -f 1) \
-            --build-number=$(grep "version: " pubspec.yaml | cut -d "+" -f 2)
+        script: bash ./codemagic_build_ipa.sh
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
