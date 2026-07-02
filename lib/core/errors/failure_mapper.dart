@@ -87,6 +87,9 @@ abstract final class FailureMapper {
   static String _mapAuthMessage(String message) {
     final lower = message.toLowerCase();
 
+    if (lower.contains('database error saving new user')) {
+      return 'signup_database_error';
+    }
     if (lower.contains('invalid login credentials')) {
       return 'invalid_credentials';
     }
