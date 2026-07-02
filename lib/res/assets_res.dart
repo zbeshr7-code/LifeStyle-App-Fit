@@ -7,7 +7,7 @@ class AssetsRes {
   AssetsRes._();
 
   static const String PROJECT_NAME = 'soccer_sys';
-  static const String PROJECT_VERSION = '1.6.1+2';
+  static const String PROJECT_VERSION = '1.6.9+10';
   static const String APP_LOGO = 'assets/app_logo.jpg';
   static const String BG = 'assets/bg.jpg';
   static const String RINGTONE = 'assets/sounds/ringtone.wav';

@@ -7,10 +7,6 @@ set -euo pipefail
 
 echo "== Codemagic post-clone: prepare iOS =="
 
-if [ ! -f .env ]; then
-  cp .env.example .env
-fi
-
 flutter pub get
 
 mkdir -p ios/Runner.xcworkspace/xcshareddata/xcschemes

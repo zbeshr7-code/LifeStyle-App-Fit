@@ -7,6 +7,6 @@ class DefaultRes {
   DefaultRes._();
 
   static const String PROJECT_NAME = 'soccer_sys';
-  static const String PROJECT_VERSION = '1.6.1+2';
-  static const String ENV_FILE = '.env';
+  static const String PROJECT_VERSION = '1.6.9+10';
+  static const String = '.env';
 }

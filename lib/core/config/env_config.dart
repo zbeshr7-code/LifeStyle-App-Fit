@@ -24,7 +24,7 @@ abstract final class EnvConfig {
   }
 }
 
-/// Fallback values when `.env` is missing or contains placeholders.
+/// Fallback values when bundled config is missing or contains placeholders.
 abstract final class DefaultRes {
   static const supabaseUrl = 'https://legcosmcypmrkyzhvbwo.supabase.co';
   static const supabaseAnonKey =

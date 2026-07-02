@@ -21,7 +21,7 @@ Future<void> main() async {
   try {
     await loadAppEnv();
   } catch (_) {
-    // EnvConfig still has safe fallbacks for missing assets.
+    // EnvConfig has safe fallbacks if bundled config fails to load.
   }
 
   await Supabase.initialize(
