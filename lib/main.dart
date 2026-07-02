@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:soccer_sys/core/config/env_config.dart';
-import 'package:soccer_sys/core/config/env_loader.dart';
-import 'package:soccer_sys/core/localization/app_translations.dart';
-import 'package:soccer_sys/core/localization/date_formatting.dart';
+import 'package:soccer_sys/core/localization/app_translations.dart';import 'package:soccer_sys/core/localization/date_formatting.dart';
 import 'package:soccer_sys/core/localization/locale_controller.dart';
 import 'package:soccer_sys/core/routes/app_pages.dart';
 import 'package:soccer_sys/core/routes/app_routes.dart';
@@ -18,14 +16,7 @@ Future<void> main() async {
   await initializeAppDateFormatting();
   await FcmService.bootstrap();
 
-  try {
-    await loadAppEnv();
-  } catch (_) {
-    // EnvConfig has safe fallbacks if bundled config fails to load.
-  }
-
-  await Supabase.initialize(
-    url: EnvConfig.supabaseUrl,
+  await Supabase.initialize(    url: EnvConfig.supabaseUrl,
     anonKey: EnvConfig.supabaseAnonKey,
   );
 
