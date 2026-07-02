@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:soccer_sys/core/config/env_config.dart';
+import 'package:soccer_sys/core/config/env_loader.dart';
 import 'package:soccer_sys/core/localization/app_translations.dart';
 import 'package:soccer_sys/core/localization/date_formatting.dart';
 import 'package:soccer_sys/core/localization/locale_controller.dart';
@@ -19,9 +19,9 @@ Future<void> main() async {
   await FcmService.bootstrap();
 
   try {
-    await dotenv.load(fileName: '.env');
+    await loadAppEnv();
   } catch (_) {
-    // `.env` asset may be missing in some builds; EnvConfig has fallbacks.
+    // EnvConfig still has safe fallbacks for missing assets.
   }
 
   await Supabase.initialize(
