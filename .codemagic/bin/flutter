@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Codemagic Workflow Editor wrongly appends ios/Runner.xcworkspace to
+# "flutter build ipa". This wrapper removes that argument.
+REAL_FLUTTER="${FLUTTER_ROOT:-/Users/builder/programs/flutter}/bin/flutter"
+if [ ! -x "$REAL_FLUTTER" ]; then
+  REAL_FLUTTER="/Users/builder/programs/flutter/bin/flutter"
+fi
+
+if [[ "$1" == "build" && "$2" == "ipa" ]]; then
+  args=(build ipa)
+  shift 2
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      ios/Runner.xcworkspace|ios/Runner.xcodeproj|Runner.xcworkspace|Runner.xcodeproj)
+        shift
+        ;;
+      *)
+        args+=("$1")
+        shift
+        ;;
+    esac
+  done
+  has_scheme=false
+  for arg in "${args[@]}"; do
+    if [[ "$arg" == "--scheme" || "$arg" == --scheme=* ]]; then
+      has_scheme=true
+      break
+    fi
+  done
+  if [[ "$has_scheme" == "false" ]]; then
+    args+=(--scheme Runner)
+  fi
+  exec "$REAL_FLUTTER" "${args[@]}"
+fi
+
+exec "$REAL_FLUTTER" "$@"

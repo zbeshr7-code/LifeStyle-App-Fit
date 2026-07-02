@@ -1,9 +1,12 @@
-# Use this file in Codemagic: Settings → Build → Configuration → codemagic.yaml
-# Do NOT use the Workflow Editor "Default Workflow" (it fails scheme detection).
+# REQUIRED in Codemagic UI:
+# Settings → Build → Configuration → switch to "codemagic.yaml" (not Workflow Editor)
+#
+# If you must stay on Workflow Editor, add this Pre-build script:
+#   export PATH="$CM_BUILD_DIR/.codemagic/bin:$PATH"
 
 workflows:
   default-workflow:
-    name: Default Workflow
+    name: Default workflow
     max_build_duration: 120
     instance_type: mac_mini_m2
     integrations:
@@ -23,16 +26,13 @@ workflows:
         distribution_type: app_store
         bundle_identifier: com.sa.lifestylefit
       vars:
-        CM_FLUTTER_SCHEME: Runner
-        XCODE_WORKSPACE: ios/Runner.xcworkspace
-        XCODE_SCHEME: Runner
-        BUNDLE_ID: com.sa.lifestylefit
+        PATH: $CM_BUILD_DIR/.codemagic/bin:$PATH
     scripts:
       - name: Post-clone bootstrap
         script: bash ./codemagic_post_clone.sh
       - name: Install CocoaPods dependencies
         script: cd ios && pod install
-      - name: Install Flutter CLI wrapper (Workflow Editor compatibility)
+      - name: Put Flutter wrapper on PATH
         script: bash ./codemagic_install_flutter_wrapper.sh
       - name: Set up code signing settings on Xcode project
         script: xcode-project use-profiles
