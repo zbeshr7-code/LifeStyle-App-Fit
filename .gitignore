@@ -69,6 +69,7 @@ app.*.map.json
 
 # Secrets
 .env
+.firebase/
 
 # Cursor
 .cursor/
