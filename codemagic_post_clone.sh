@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-# Run this in Codemagic Workflow Editor → Post-clone script (before dependencies).
+# Codemagic Workflow Editor → Pre-build script (recommended):
+#   bash ./codemagic_install_flutter_wrapper.sh
+# Or full bootstrap (Post-clone):
+#   bash ./codemagic_post_clone.sh
 set -euo pipefail
 
 echo "== Codemagic post-clone: prepare iOS =="

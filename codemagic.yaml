@@ -32,6 +32,8 @@ workflows:
         script: bash ./codemagic_post_clone.sh
       - name: Install CocoaPods dependencies
         script: cd ios && pod install
+      - name: Install Flutter CLI wrapper (Workflow Editor compatibility)
+        script: bash ./codemagic_install_flutter_wrapper.sh
       - name: Set up code signing settings on Xcode project
         script: xcode-project use-profiles
       - name: Flutter build ipa
