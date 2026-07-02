@@ -28,7 +28,7 @@ abstract final class EnvConfig {
 abstract final class DefaultRes {
   static const supabaseUrl = 'https://legcosmcypmrkyzhvbwo.supabase.co';
   static const supabaseAnonKey =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlZ2Nvc21jeXBtcmt5emh2YndvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2NDkyMTUsImV4cCI6MjA5NTIyNTIxNX0.szmiJZX9MdL37_Wtq4cYBnEGfiMojWJhK75wZvoVh5U';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlZ2Nvc21jeXBtcmt5emh2YndvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2NDkyMTUsImV4cCI6MjA5NTIyNTIxNX0.szmiJZX9MdL37_Wtq4cYBnEGfiMojWJhK75wZvoVh5U';
   static const agoraAppId = '';
   static const moyasarPublishableKey = '';
 }

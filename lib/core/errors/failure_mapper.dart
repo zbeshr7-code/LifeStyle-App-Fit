@@ -41,7 +41,8 @@ abstract final class FailureMapper {
       }
     }
 
-    if (error.statusCode == '401') {
+    if (error.statusCode == '401' &&
+        error.message.toLowerCase().contains('invalid api key')) {
       return 'invalid_api_key';
     }
     if (error.statusCode == '429') {
