@@ -38,6 +38,12 @@ abstract final class FailureMapper {
           return 'rate_limit_exceeded';
         case 'validation_failed':
           return 'invalid_email';
+        case 'otp_expired':
+          return 'otp_expired';
+        case 'invalid_otp':
+          return 'invalid_otp';
+        case 'over_sms_send_rate_limit':
+          return 'sms_rate_limit_exceeded';
       }
     }
 
@@ -105,6 +111,12 @@ abstract final class FailureMapper {
     }
     if (lower.contains('invalid api key')) {
       return 'invalid_api_key';
+    }
+    if (lower.contains('token has expired') || lower.contains('otp expired')) {
+      return 'otp_expired';
+    }
+    if (lower.contains('invalid otp') || lower.contains('invalid token')) {
+      return 'invalid_otp';
     }
     if (lower.contains('weak') && lower.contains('password')) {
       return 'weak_password';

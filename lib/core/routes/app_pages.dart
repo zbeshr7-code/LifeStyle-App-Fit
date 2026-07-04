@@ -6,6 +6,7 @@ import 'package:soccer_sys/core/routes/subscription_required_middleware.dart';
 import 'package:soccer_sys/modules/auth/bindings/auth_binding.dart';
 import 'package:soccer_sys/modules/auth/views/forgot_password_view.dart';
 import 'package:soccer_sys/modules/auth/views/login_view.dart';
+import 'package:soccer_sys/modules/auth/views/phone_otp_view.dart';
 import 'package:soccer_sys/modules/auth/views/register_view.dart';
 import 'package:soccer_sys/modules/activity/bindings/activity_binding.dart';
 import 'package:soccer_sys/modules/activity/views/activity_day_detail_view.dart';
@@ -73,6 +74,12 @@ abstract final class AppPages {
     GetPage(
       name: AppRoutes.forgotPassword,
       page: ForgotPasswordView.new,
+      binding: AuthBinding(),
+      middlewares: _guestMiddleware,
+    ),
+    GetPage(
+      name: AppRoutes.phoneOtp,
+      page: PhoneOtpView.new,
       binding: AuthBinding(),
       middlewares: _guestMiddleware,
     ),

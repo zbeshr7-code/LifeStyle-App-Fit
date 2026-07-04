@@ -1,0 +1,1 @@
+enum PhoneAuthIntent { login, register }

@@ -73,7 +73,7 @@ class UserModel {
       id: json['id'] as String,
       firstName: json['first_name'] as String,
       lastName: json['last_name'] as String,
-      email: json['email'] as String,
+      email: (json['email'] as String?) ?? '',
       phoneNumber: json['phone_number'] as String?,
       avatarUrl: json['avatar_url'] as String?,
       bio: json['bio'] as String?,

@@ -3,6 +3,7 @@ abstract final class AppRoutes {
   static const login = '/login';
   static const register = '/register';
   static const forgotPassword = '/forgot-password';
+  static const phoneOtp = '/phone-otp';
   static const home = '/home';
   static const chatRoom = '/chat/room';
   static const callActive = '/call/active';

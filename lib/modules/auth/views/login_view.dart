@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:soccer_sys/core/routes/app_routes.dart';
 import 'package:soccer_sys/core/theme/tokens.dart';
 import 'package:soccer_sys/modules/auth/controllers/auth_controller.dart';
+import 'package:soccer_sys/modules/auth/models/auth_method.dart';
+import 'package:soccer_sys/modules/auth/widgets/auth_method_tabs.dart';
 import 'package:soccer_sys/shared/widgets/auth_widgets.dart';
 import 'package:soccer_sys/shared/widgets/glass_container.dart';
 
@@ -22,46 +24,65 @@ class LoginView extends GetView<AuthController> {
       ),
       child: Obx(() {
         final isLoading = controller.status.value.isLoading;
+        final method = controller.authMethod.value;
 
         return GlassContainer(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              AuthMethodTabs(
+                selected: method,
+                onChanged: controller.setAuthMethod,
+              ),
+              const SizedBox(height: AppSpacing.lg),
               if (controller.errorMessage.isNotEmpty)
                 ErrorBanner(message: controller.errorMessage.value),
-              AppTextField(
-                label: 'email'.tr,
-                hint: 'email_hint'.tr,
-                controller: controller.emailController,
-                icon: Icons.email_outlined,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              AppTextField(
-                label: 'password'.tr,
-                hint: 'password_hint'.tr,
-                controller: controller.passwordController,
-                icon: Icons.lock_outline,
-                obscureText: true,
-                textInputAction: TextInputAction.done,
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Align(
-                alignment: AlignmentDirectional.centerEnd,
-                child: TextButton(
-                  onPressed: () => Get.toNamed(AppRoutes.forgotPassword),
-                  child: Text(
-                    'forgot_password'.tr,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.primary,
-                        ),
+              if (method == AuthMethod.email) ...[
+                AppTextField(
+                  label: 'email'.tr,
+                  hint: 'email_hint'.tr,
+                  controller: controller.emailController,
+                  icon: Icons.email_outlined,
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                AppTextField(
+                  label: 'password'.tr,
+                  hint: 'password_hint'.tr,
+                  controller: controller.passwordController,
+                  icon: Icons.lock_outline,
+                  obscureText: true,
+                  textInputAction: TextInputAction.done,
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: TextButton(
+                    onPressed: () => Get.toNamed(AppRoutes.forgotPassword),
+                    child: Text(
+                      'forgot_password'.tr,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: AppColors.primary,
+                          ),
+                    ),
                   ),
                 ),
-              ),
+              ] else ...[
+                AppTextField(
+                  label: 'phone'.tr,
+                  hint: 'phone_hint'.tr,
+                  controller: controller.phoneController,
+                  icon: Icons.phone_outlined,
+                  keyboardType: TextInputType.phone,
+                  textInputAction: TextInputAction.done,
+                ),
+              ],
               const SizedBox(height: AppSpacing.md),
               AppPrimaryButton(
-                label: 'login_button'.tr,
+                label: method == AuthMethod.phone
+                    ? 'send_otp'.tr
+                    : 'login_button'.tr,
                 isLoading: isLoading,
                 onPressed: controller.login,
               ),

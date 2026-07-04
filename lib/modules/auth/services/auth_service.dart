@@ -54,6 +54,27 @@ class AuthService {
     );
   }
 
+  Future<void> sendPhoneOtp({
+    required String phone,
+    Map<String, dynamic>? metadata,
+  }) {
+    return _client.auth.signInWithOtp(
+      phone: phone,
+      data: metadata,
+    );
+  }
+
+  Future<AuthResponse> verifyPhoneOtp({
+    required String phone,
+    required String token,
+  }) {
+    return _client.auth.verifyOTP(
+      phone: phone,
+      token: token,
+      type: OtpType.sms,
+    );
+  }
+
   Future<void> signOut() {
     return _client.auth.signOut();
   }

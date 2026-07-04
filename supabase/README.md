@@ -76,6 +76,13 @@
 6. **iOS**: run `flutterfire configure` and add APNs key in Firebase Console; ensure `GoogleService-Info.plist` is in `ios/Runner/`.
 7. Test on **two physical devices** with the app killed: send a chat message and start a call invite.
 
+## Phone OTP auth (SMS)
+
+1. Supabase Dashboard → **Authentication** → **Providers** → enable **Phone**.
+2. Configure an SMS provider (Twilio recommended): Account SID, Auth Token, Message Service SID.
+3. Apply migration `027_phone_auth_profiles.sql` (makes `profiles.email` optional, stores `phone_number`, updates `handle_new_user`).
+4. In the app: **Login/Register** → tab **الهاتف / Phone** → enter Saudi mobile `05xxxxxxxx` → verify 6-digit OTP.
+
 ## Local setup
 
 1. Copy `.env.example` → `.env`
