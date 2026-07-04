@@ -167,7 +167,7 @@ class AuthController extends GetxController {
       return;
     }
 
-    final phone = PhoneUtils.normalize(phoneController.text.trim());
+    final phone = PhoneUtils.normalizeLocal(phoneController.text.trim());
     if (phone == null) {
       _setValidationError('validation_phone_invalid');
       return;

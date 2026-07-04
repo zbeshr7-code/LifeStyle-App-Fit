@@ -5,6 +5,7 @@ import 'package:soccer_sys/core/theme/tokens.dart';
 import 'package:soccer_sys/modules/auth/controllers/auth_controller.dart';
 import 'package:soccer_sys/modules/auth/models/auth_method.dart';
 import 'package:soccer_sys/modules/auth/widgets/auth_method_tabs.dart';
+import 'package:soccer_sys/modules/auth/widgets/phone_number_field.dart';
 import 'package:soccer_sys/modules/auth/widgets/role_selector.dart';
 import 'package:soccer_sys/modules/auth/widgets/terms_checkbox.dart';
 import 'package:soccer_sys/shared/widgets/auth_widgets.dart';
@@ -74,12 +75,8 @@ class RegisterView extends GetView<AuthController> {
                   textInputAction: TextInputAction.next,
                 ),
               ] else ...[
-                AppTextField(
-                  label: 'phone'.tr,
-                  hint: 'phone_hint'.tr,
+                PhoneNumberField(
                   controller: controller.phoneController,
-                  icon: Icons.phone_outlined,
-                  keyboardType: TextInputType.phone,
                   textInputAction: TextInputAction.next,
                 ),
               ],
