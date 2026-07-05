@@ -1,12 +1,12 @@
 # REQUIRED in Codemagic UI:
 # Settings → Build → Configuration → switch to "codemagic.yaml" (not Workflow Editor)
 #
-# If you must stay on Workflow Editor, add this Pre-build script:
-#   export PATH="$CM_BUILD_DIR/.codemagic/bin:$PATH"
+# Android: upload keystore in Team settings → Code signing identities → Android keystores
+# and set the reference name below to match.
 
 workflows:
-  default-workflow:
-    name: Default workflow
+  ios-app-store:
+    name: Lifestyle Fit App Store
     max_build_duration: 120
     instance_type: mac_mini_m2
     integrations:
@@ -27,6 +27,8 @@ workflows:
         bundle_identifier: com.sa.lifestylefit
       vars:
         PATH: $CM_BUILD_DIR/.codemagic/bin:$PATH
+        CM_FLUTTER_SCHEME: Runner
+        BUNDLE_ID: com.sa.lifestylefit
     scripts:
       - name: Post-clone bootstrap
         script: bash ./codemagic_post_clone.sh
@@ -35,7 +37,7 @@ workflows:
       - name: Put Flutter wrapper on PATH
         script: bash ./codemagic_install_flutter_wrapper.sh
       - name: Set up code signing settings on Xcode project
-        script: xcode-project use-profiles
+        script: xcode-project use-profiles --project ios/Runner.xcodeproj
       - name: Flutter build ipa
         script: bash ./codemagic_build_ipa.sh
     artifacts:
@@ -44,3 +46,38 @@ workflows:
     publishing:
       app_store_connect:
         auth: integration
+
+  android-google-play:
+    name: Lifestyle Fit Google Play
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+    environment:
+      flutter: stable
+      android_signing:
+        - lifestyle_fit_keystore
+      vars:
+        PACKAGE_NAME: com.sa.lifestylefit
+    scripts:
+      - name: Prepare Android build
+        script: |
+          set -euo pipefail
+          if [ ! -f .env ]; then
+            cp .env.example .env
+          fi
+          flutter pub get
+          echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+      - name: Build Android App Bundle
+        script: |
+          flutter build appbundle --release \
+            --build-name=$(grep "version: " pubspec.yaml | cut -d " " -f 2 | cut -d "+" -f 1) \
+            --build-number=$(grep "version: " pubspec.yaml | cut -d "+" -f 2)
+    artifacts:
+      - build/app/outputs/bundle/release/*.aab
+      - build/app/outputs/mapping/release/mapping.txt
