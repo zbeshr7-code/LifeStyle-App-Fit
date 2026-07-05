@@ -57,6 +57,12 @@ android {
             }
         }
     }
+
+    packaging {
+        jniLibs {
+            keepDebugSymbols += listOf("**/*.so")
+        }
+    }
 }
 
 kotlin {
