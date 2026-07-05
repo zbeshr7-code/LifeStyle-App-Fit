@@ -11,6 +11,7 @@ import 'package:soccer_sys/modules/subscriptions/controllers/trainer_subscribers
 import 'package:soccer_sys/modules/subscriptions/controllers/trainer_subscription_edit_controller.dart';
 import 'package:soccer_sys/modules/subscriptions/models/subscription_route_args.dart';
 import 'package:soccer_sys/modules/subscriptions/repositories/subscription_repository.dart';
+import 'package:soccer_sys/modules/subscriptions/services/iap_service.dart';
 
 class TraineePlansBinding extends Bindings {
   @override
@@ -30,6 +31,7 @@ class SubscriptionCheckoutBinding extends Bindings {
     Get.lazyPut<SubscriptionCheckoutController>(
       () => SubscriptionCheckoutController(
         Get.find<SubscriptionRepository>(),
+        Get.find<IapService>(),
         args.plan,
       ),
     );

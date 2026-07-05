@@ -14,30 +14,38 @@
 - `add_workouts_tables` — workouts feature
 - `020_subscriptions` — trainer plans + trainee subscriptions (apply via CLI/MCP)
 - `021_trainer_subscription_revenue` — RPC `trainer_subscription_revenue` for trainer earnings summary
-- `023_trainer_and_moyasar` — trainer assign/cancel, Moyasar payment RPCs + Edge Functions
+- `023_trainer_and_moyasar` — trainer assign/cancel, legacy Moyasar RPCs (superseded by IAP)
+- `028_iap_subscriptions` — Google Play / App Store in-app purchase flow
 
 ## Subscriptions
 
-1. Apply migrations `020_subscriptions.sql` and `023_trainer_and_moyasar.sql` to project `legcosmcypmrkyzhvbwo`.
+1. Apply migrations through `028_iap_subscriptions.sql` to project `legcosmcypmrkyzhvbwo`.
 2. Trainers manage plans in app: **Dashboard → خطط الاشتراك**.
 3. Trainers can **assign/cancel** subscriptions for trainees (any plan + custom dates, waived) from **المشتركون**.
 4. Trainees subscribe from gated tabs or **عرض الخطط**; chat stays open without subscription.
-5. Paid plans use **Moyasar Test Mode** (`initiate_plan_payment` → Flutter `CreditCard` → `verify-moyasar-payment`).
+5. Paid plans use **In-App Purchase** (`initiate_plan_payment` → native store sheet → `verify-store-purchase`).
 
-## Moyasar payments (test mode)
+## In-app purchase (Google Play / App Store)
 
-1. Create a Moyasar account and copy **pk_test_*** (client) and **sk_test_*** (server only).
-2. Add to `.env`: `MOYASAR_PUBLISHABLE_KEY=pk_test_...`
-3. Set Supabase Edge Function secrets:
-   - `MOYASAR_SECRET_KEY` = `sk_test_...`
-   - `MOYASAR_WEBHOOK_SECRET` = shared secret for webhook verification
-4. Deploy functions:
+1. Create non-consumable products in **App Store Connect** and **Google Play Console** with IDs:
+   - `lifestyle_fit_sub_30d` (30 days)
+   - `lifestyle_fit_sub_90d` (90 days)
+   - `lifestyle_fit_sub_180d` (180 days)
+2. Apply migration `028_iap_subscriptions.sql` (if not already on remote):
    ```bash
-   supabase functions deploy verify-moyasar-payment --project-ref legcosmcypmrkyzhvbwo
-   supabase functions deploy moyasar-webhook --project-ref legcosmcypmrkyzhvbwo
+   supabase db push --project-ref legcosmcypmrkyzhvbwo
    ```
-5. Register webhook in Moyasar Dashboard (test): `https://legcosmcypmrkyzhvbwo.supabase.co/functions/v1/moyasar-webhook` — event `payment_paid`.
-6. Test card: `4111111111111111`, any future expiry, any CVC.
+   Or paste the SQL from `supabase/migrations/028_iap_subscriptions.sql` in **Dashboard → SQL Editor**.
+3. Deploy Edge Function:
+   ```bash
+   supabase login
+   supabase link --project-ref legcosmcypmrkyzhvbwo
+   supabase functions deploy verify-store-purchase --project-ref legcosmcypmrkyzhvbwo
+   ```
+4. Test on **physical iOS/Android devices** (IAP does not work on web).
+5. Optional: add server-side receipt validation (Apple App Store Server API / Google Play Developer API) in `verify-store-purchase`.
+
+> **Note:** Supabase MCP may lack permission to apply migrations from Cursor; use CLI or Dashboard above.
 
 ## Agora voice/video calls
 
@@ -85,9 +93,7 @@
 
 ## Local setup
 
-1. Copy `.env.example` → `.env`
-2. Set `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `AGORA_APP_ID`, and `MOYASAR_PUBLISHABLE_KEY` from dashboards
-3. Run the Flutter app: `flutter run`
+2. Config is in `lib/core/config/env_config.dart` (`SUPABASE_URL`, `SUPABASE_ANON_KEY`, `AGORA_APP_ID`)
 
 ## Managing schema
 

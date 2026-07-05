@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moyasar/moyasar.dart';
 import 'package:soccer_sys/core/theme/tokens.dart';
 import 'package:soccer_sys/modules/subscriptions/controllers/subscription_checkout_controller.dart';
 import 'package:soccer_sys/shared/widgets/glass_container.dart';
@@ -26,13 +25,31 @@ class SubscriptionCheckoutView extends GetView<SubscriptionCheckoutController> {
         }
 
         final error = controller.loadError.value;
-        if (error != null) {
-          return Center(child: Text(error.tr));
+        final hasSession = controller.paymentSession.value != null;
+
+        if (error != null && !hasSession && !controller.isFreePlan) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsetsDirectional.all(AppSpacing.lg),
+              child: Text(error.tr, textAlign: TextAlign.center),
+            ),
+          );
         }
 
         return ListView(
           padding: const EdgeInsetsDirectional.all(AppSpacing.lg),
           children: [
+            if (error != null)
+              Padding(
+                padding: const EdgeInsetsDirectional.only(bottom: AppSpacing.md),
+                child: Text(
+                  error.tr,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: AppColors.error,
+                  ),
+                ),
+              ),
             GlassContainer(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -45,7 +62,7 @@ class SubscriptionCheckoutView extends GetView<SubscriptionCheckoutController> {
                   ),
                   SizedBox(height: AppSpacing.sm),
                   Text(
-                    '${plan.priceAmount.toStringAsFixed(0)} ${'subscription_currency_sar'.tr}',
+                    controller.displayPrice ?? '',
                     style: theme.textTheme.titleLarge?.copyWith(
                       color: AppColors.primary,
                     ),
@@ -89,44 +106,53 @@ class SubscriptionCheckoutView extends GetView<SubscriptionCheckoutController> {
                       : Text('subscription_activate_free'.tr),
                 ),
               ),
-            ] else if (controller.canShowMoyasar) ...[
+            ] else if (controller.canPurchase) ...[
               GlassContainer(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'subscription_moyasar_title'.tr,
+                      'subscription_iap_title'.tr,
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     SizedBox(height: AppSpacing.sm),
                     Text(
-                      'subscription_moyasar_secure'.tr,
+                      'subscription_iap_secure'.tr,
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),
-                    SizedBox(height: AppSpacing.md),
-                    CreditCard(
-                      config: controller.paymentConfig!,
-                      onPaymentResult: controller.onPaymentResult,
-                    ),
                   ],
                 ),
               ),
-              if (controller.isSubmitting.value) ...[
-                SizedBox(height: AppSpacing.lg),
-                const Center(child: CircularProgressIndicator()),
-              ],
-            ] else ...[
-              GlassContainer(
-                child: Text(
-                  'subscription_moyasar_key_missing'.tr,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: AppColors.error,
+              SizedBox(height: AppSpacing.lg),
+              Obx(
+                () => FilledButton(
+                  onPressed: controller.isSubmitting.value
+                      ? null
+                      : controller.purchasePlan,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.primaryForeground,
+                    minimumSize: const Size.fromHeight(52),
                   ),
+                  child: controller.isSubmitting.value
+                      ? const SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : Text('subscription_iap_pay_button'.tr),
                 ),
+              ),
+              SizedBox(height: AppSpacing.sm),
+              TextButton(
+                onPressed: controller.isSubmitting.value
+                    ? null
+                    : controller.restorePurchases,
+                child: Text('subscription_iap_restore'.tr),
               ),
             ],
           ],

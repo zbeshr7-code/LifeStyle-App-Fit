@@ -141,15 +141,23 @@ class SubscriptionService {
     return rows.first;
   }
 
-  Future<Map<String, dynamic>> verifyMoyasarPayment({
+  Future<Map<String, dynamic>> verifyStorePurchase({
     required String subscriptionId,
-    required String paymentId,
+    required String productId,
+    required String transactionId,
+    required String platform,
+    String? purchaseToken,
+    String? verificationData,
   }) async {
     final response = await _client.functions.invoke(
-      'verify-moyasar-payment',
+      'verify-store-purchase',
       body: {
         'subscriptionId': subscriptionId,
-        'paymentId': paymentId,
+        'productId': productId,
+        'transactionId': transactionId,
+        'platform': platform,
+        if (purchaseToken != null) 'purchaseToken': purchaseToken,
+        if (verificationData != null) 'verificationData': verificationData,
       },
     );
 

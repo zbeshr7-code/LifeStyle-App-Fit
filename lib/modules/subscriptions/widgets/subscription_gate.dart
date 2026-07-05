@@ -156,7 +156,7 @@ class _SubscriptionRequiredCard extends StatelessWidget {
                 Icon(Icons.payment, size: 18, color: AppColors.primary),
                 SizedBox(width: AppSpacing.sm),
                 Text(
-                  'subscription_moyasar_active'.tr,
+                  'subscription_iap_active'.tr,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         color: AppColors.primary,
                       ),

@@ -18,17 +18,20 @@ enum SubscriptionStatus {
 enum SubscriptionPaymentStatus {
   waived,
   pendingMoyasar,
+  pendingIap,
   paid;
 
   String get dbValue => switch (this) {
         SubscriptionPaymentStatus.waived => 'waived',
         SubscriptionPaymentStatus.pendingMoyasar => 'pending_moyasar',
+        SubscriptionPaymentStatus.pendingIap => 'pending_iap',
         SubscriptionPaymentStatus.paid => 'paid',
       };
 
   static SubscriptionPaymentStatus fromString(String? value) => switch (value) {
         'waived' => SubscriptionPaymentStatus.waived,
         'pending_moyasar' => SubscriptionPaymentStatus.pendingMoyasar,
+        'pending_iap' => SubscriptionPaymentStatus.pendingIap,
         'paid' => SubscriptionPaymentStatus.paid,
         _ => SubscriptionPaymentStatus.waived,
       };

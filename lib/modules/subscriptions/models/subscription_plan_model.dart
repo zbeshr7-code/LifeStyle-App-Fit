@@ -11,6 +11,7 @@ class SubscriptionPlanModel {
     required this.sortOrder,
     this.description,
     this.currency = 'SAR',
+    this.storeProductId,
   });
 
   final String id;
@@ -24,6 +25,7 @@ class SubscriptionPlanModel {
   final bool isActive;
   final bool isFeatured;
   final int sortOrder;
+  final String? storeProductId;
 
   String get durationLabelKey => switch (durationDays) {
         30 => 'subscription_duration_1_month',
@@ -54,6 +56,7 @@ class SubscriptionPlanModel {
       isActive: json['is_active'] as bool? ?? true,
       isFeatured: json['is_featured'] as bool? ?? false,
       sortOrder: (json['sort_order'] as num?)?.toInt() ?? 0,
+      storeProductId: json['store_product_id'] as String?,
     );
   }
 

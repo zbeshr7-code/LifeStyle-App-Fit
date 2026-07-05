@@ -206,14 +206,22 @@ class SubscriptionRepository {
   }
 
   Future<({Failure? failure, TraineeSubscriptionModel? subscription})>
-      verifyMoyasarPayment({
+      verifyStorePurchase({
     required String subscriptionId,
-    required String paymentId,
+    required String productId,
+    required String transactionId,
+    required String platform,
+    String? purchaseToken,
+    String? verificationData,
   }) async {
     try {
-      final data = await _service.verifyMoyasarPayment(
+      final data = await _service.verifyStorePurchase(
         subscriptionId: subscriptionId,
-        paymentId: paymentId,
+        productId: productId,
+        transactionId: transactionId,
+        platform: platform,
+        purchaseToken: purchaseToken,
+        verificationData: verificationData,
       );
       final subJson = data['subscription'] as Map<String, dynamic>?;
       if (subJson == null) {
